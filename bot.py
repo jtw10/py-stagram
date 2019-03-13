@@ -4,16 +4,16 @@ from time import sleep, strftime
 from random import randint
 import pandas as pd
 
-chromedriver_path = '/Users/joshwong/Downloads/chromedriver'
+chromedriver_path = '/Users/joshwong/Downloads/chromedriver' # replace path with your own  
 webdriver = webdriver.Chrome(executable_path=chromedriver_path)
 sleep(2)
 webdriver.get('http://www.instagram.com/accounts/login/?source=auth_switcher')
 sleep(3)
 
 username = webdriver.find_element_by_name('username')
-username.send_keys('PUT YOUR USERNAME HERE')
+username.send_keys('PUT YOUR USERNAME HERE') # replace string with your ig username
 password = webdriver.find_element_by_name('password')
-password.send_keys('PUT YOUR PASSWORD HERE')
+password.send_keys('PUT YOUR PASSWORD HERE') # replace string with your ig password
 
 button_login = webdriver.find_element_by_css_selector('#react-root > section > main > div > article > div > div:nth-child(1) > div > form > div:nth-child(3) > button')
 button_login.click()
@@ -22,7 +22,7 @@ sleep(3)
 notnow = webdriver.find_element_by_css_selector('body > div.RnEpo.Yx5HN > div > div > div.mt3GC > button.aOOlW.HoLwm')
 notnow.click() # comment these last 2 lines out, if you don't get a pop up asking about notifications
 
-hashtag_list = ['f4f', 'followforfollow', 'wanderlust', 'travel', 'like4like', 'recent4recent', 'followback', 'travelgram', 'goodvibes', 'pnw']
+hashtag_list = ['f4f', 'followforfollow', 'wanderlust', 'travel', 'like4like', 'recent4recent', 'followback', 'travelgram', 'goodvibes', 'pnw'] # change to hashtags you want to follow
 
 prev_user_list = []
 #prev_user_list = pd.read_csv('20181203-224633_users_followed_list.csv', delimiter=',').iloc[:,1:2] # useful to build a user log
@@ -70,16 +70,16 @@ for hashtag in hashtag_list:
                         comment_box = webdriver.find_element_by_xpath('/html/body/div[2]/div[2]/div/article/div[2]/section[3]/div/form/textarea')
 
                         if (comm_prob < 7):
-                            comment_box.send_keys('That\'s totally rad! OwO')
+                            comment_box.send_keys('That\'s totally rad! OwO') # replace with your own comment
                             sleep(1)
-                        elif (comm_prob > 6) and (comm_prob < 9):
-                            comment_box.send_keys('Rawr :3')
+                        elif (comm_prob > 6) and (comm_prob < 9): # replace with your own comment
+                            comment_box.send_keys('Love your profile. Let\'s follow each other!')
                             sleep(1)
                         elif comm_prob == 9:
-                            comment_box.send_keys('That\'s wild dude!')
+                            comment_box.send_keys('That\'s wild dude!') # replace with your own comment
                             sleep(1)
                         elif comm_prob == 10:
-                            comment_box.send_keys('UwU')
+                            comment_box.send_keys('UwU means unhappy without you. Please follow me!') # replace with your own comment
                             sleep(1)
                         # Enter to post comment
                         comment_box.send_keys(Keys.ENTER)
