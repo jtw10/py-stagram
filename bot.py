@@ -4,7 +4,7 @@ from time import sleep, strftime
 from random import randint
 import pandas as pd
 
-chromedriver_path = '/Users/joshwong/Downloads/chromedriver' # replace path with your own  
+chromedriver_path = '/Users/joshwong/Downloads/chromedriver' # replace path with your chromedriver path
 webdriver = webdriver.Chrome(executable_path=chromedriver_path)
 sleep(2)
 webdriver.get('http://www.instagram.com/accounts/login/?source=auth_switcher')
@@ -22,7 +22,7 @@ sleep(3)
 notnow = webdriver.find_element_by_css_selector('body > div.RnEpo.Yx5HN > div > div > div.mt3GC > button.aOOlW.HoLwm')
 notnow.click() # comment these last 2 lines out, if you don't get a pop up asking about notifications
 
-hashtag_list = ['f4f', 'followforfollow', 'wanderlust', 'travel', 'like4like', 'recent4recent', 'followback', 'travelgram', 'goodvibes', 'pnw'] # change to hashtags you want to follow
+hashtag_list = ['f4f', 'followforfollow', 'like4like', 'recent4recent', 'followback'] # change to hashtags you want to follow
 
 prev_user_list = []
 #prev_user_list = pd.read_csv('20181203-224633_users_followed_list.csv', delimiter=',').iloc[:,1:2] # useful to build a user log
