@@ -15,15 +15,19 @@ username.send_keys('PUT YOUR USERNAME HERE') # replace string with your ig usern
 password = webdriver.find_element_by_name('password')
 password.send_keys('PUT YOUR PASSWORD HERE') # replace string with your ig password
 
+# get login button with css selector
 button_login = webdriver.find_element_by_css_selector('#react-root > section > main > div > article > div > div:nth-child(1) > div > form > div:nth-child(3) > button')
 button_login.click()
 sleep(3)
 
+# click not now button with css selector / comment out the lines if there is no popup
 notnow = webdriver.find_element_by_css_selector('body > div.RnEpo.Yx5HN > div > div > div.mt3GC > button.aOOlW.HoLwm')
-notnow.click() # comment these last 2 lines out, if you don't get a pop up asking about notifications
+notnow.click() 
 
+# replace hashtags with the ones you want to follow
 hashtag_list = ['f4f', 'followforfollow', 'like4like', 'recent4recent', 'followback'] # change to hashtags you want to follow
 
+# WIP
 prev_user_list = []
 #prev_user_list = pd.read_csv('20181203-224633_users_followed_list.csv', delimiter=',').iloc[:,1:2] # useful to build a user log
 #prev_user_list = list(prev_user_list['0'])
@@ -85,7 +89,7 @@ for hashtag in hashtag_list:
                         comment_box.send_keys(Keys.ENTER)
                         sleep(randint(16, 23))
 
-                # Next picture
+                # Next picture button
                 webdriver.find_element_by_link_text('Next').click()
                 sleep(randint(13, 19))
             else:
