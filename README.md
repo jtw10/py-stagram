@@ -45,7 +45,7 @@ I ran bot.py for ~20-25 minutes while I was adding comments and tidying up the c
 ![Instant Success](readme-img/img11.jpeg) 
 ## Future Considerations
 ### Followers & Unfollowers
-If you use your browser to access your followers and people you following, you will see that they are stored inside list tags. Using a for-loop, we should be able to create two seperate lists and compare your list of followers to your list of users that you follow. We can then write and save it to a .txt or .csv file and use it to compare progress.
+If you use your browser to access your followers and people you following, upon inspecting the page source you will see that all your followers are stored inside html list tags. Using a for-loop, we should be able to create two seperate lists and compare your list of followers to your list of users that you follow. We can then write and save it to a .txt or .csv file and use it to compare progress.
   
 Once we have these lists, we should be able to use Selenium to locate the follow button on the page and automate the process of unfollowing accounts which are not following back.
 ### Video Views
