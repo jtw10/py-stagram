@@ -40,6 +40,8 @@ with open('followedlist.txt', 'r') as f:
         split_list = (x[0]).split(',')
         for i in split_list:
             prev_user_list.append(i)
+        # Delete the last item in the array because it will be blank
+        del prev_user_list[-1]
     print(prev_user_list)
 
 
