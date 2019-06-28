@@ -28,7 +28,7 @@ notnow = webdriver.find_element_by_css_selector('body > div.RnEpo.Yx5HN > div > 
 notnow.click() 
 
 # replace hashtags with the ones you want to follow
-hashtag_list = ['follow4follow']
+hashtag_list = ['follow4follow', 'f4f', 'followforfollow', 'like4like', 'l4l', 'likeforlike']
 
 # Open & read list of previously followed users, and add them to prev_user_list
 prev_user_list = []
@@ -42,6 +42,8 @@ with open('followedlist.txt', 'r') as f:
             prev_user_list.append(i)
     print(prev_user_list)
 
+
+# Set counters to zero
 new_followed = []
 tag = -1
 followed = 0
@@ -52,9 +54,11 @@ for hashtag in hashtag_list:
     tag += 1
     webdriver.get('https://www.instagram.com/explore/tags/' + hashtag_list[tag] + '/')
     sleep(5)
-    first_thumbnail = webdriver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[1]/div/div/div[1]/div[1]/a/div')
 
-    first_thumbnail.click()
+    # Find the first image associated with the hashtag and click it to start the process
+    first_image = webdriver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[1]/div/div/div[1]/div[1]/a/div')
+    first_image.click()
+
     sleep(randint(1, 2))
     try:
         for x in range(1, 200):
@@ -68,37 +72,37 @@ for hashtag in hashtag_list:
                 if webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/header/div[2]/div[1]/div[2]/button').text == 'Follow':
 
                     # Following users
-                    button_follow = webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/header/div[2]/div[1]/div[2]/button')
-                    button_follow.click()
+                    follow_button = webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/header/div[2]/div[1]/div[2]/button')
+                    follow_button.click()
 
                     new_followed.append(username)
                     followed += 1
 
                     # Liking posts
-                    button_like = webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/div[2]/section[1]/span[1]/button/span')
+                    like_button = webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/div[2]/section[1]/span[1]/button/span')
+                    like_button.click()
 
-                    button_like.click()
                     likes += 1
                     sleep(randint(9, 15))
 
                     # Comments and tracker
-                    comm_prob = randint(1, 10)
-                    print('{}_{}: {}'.format(hashtag, x, comm_prob))
-                    if comm_prob > 7:
+                    comment_rng = randint(1, 10)
+                    print('{} Post#{} -- Comment Roll = {}'.format(hashtag, x, comment_rng))
+                    if comment_rng > 7:
                         comments += 1
                         webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/div[2]/section[1]/span[2]/button/span').click()
                         comment_box = webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/div[2]/section[3]/div/form/textarea')
 
-                        if (comm_prob < 7):
+                        if (comment_rng < 7):
                             comment_box.send_keys('That\'s totally rad! Love it!') # replace with your own comment
                             sleep(1)
-                        elif (comm_prob > 6) and (comm_prob < 9): # replace with your own comment
+                        elif (comment_rng > 6) and (comment_rng < 9): # replace with your own comment
                             comment_box.send_keys('Love your profile. Let\'s follow each other!')
                             sleep(1)
-                        elif comm_prob == 9:
+                        elif comment_rng == 9:
                             comment_box.send_keys('That\'s aMaZiNg!') # replace with your own comment
                             sleep(1)
-                        elif comm_prob == 10:
+                        elif comment_rng == 10:
                             comment_box.send_keys('UwU means unhappy without you. Please follow me!') # replace with your own comment
                             sleep(1)
                         # Using python to press enter for us to post comments
