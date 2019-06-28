@@ -1,36 +1,46 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from time import sleep, strftime
+from time import sleep
 from random import randint
-import pandas as pd
 
-chromedriver_path = '/Users/joshwong/Downloads/chromedriver' # replace path with your chromedriver path
+
+chromedriver_path = r'C:\Users\Me\Downloads\chromedriver.exe' # replace path with your chromedriver path
 webdriver = webdriver.Chrome(executable_path=chromedriver_path)
 sleep(2)
 webdriver.get('http://www.instagram.com/accounts/login/?source=auth_switcher')
 sleep(3)
 
 username = webdriver.find_element_by_name('username')
-username.send_keys('PUT YOUR USERNAME HERE') # replace string with your ig username
+username.send_keys('YOUR_USERNAME') # replace string with your instagram username
 password = webdriver.find_element_by_name('password')
-password.send_keys('PUT YOUR PASSWORD HERE') # replace string with your ig password
+password.send_keys('YOUR_PASSWORD') # replace string with your password
 
 # get login button with css selector
-button_login = webdriver.find_element_by_css_selector('#react-root > section > main > div > article > div > div:nth-child(1) > div > form > div:nth-child(3) > button')
+button_login = webdriver.find_element_by_css_selector('#react-root > section > main > div > article > div > div:nth-child(1) > div > form > div.Igw0E.IwRSH.eGOV_._4EzTm.bkEs3.CovQj.jKUp7.DhRcB > button')
 button_login.click()
 sleep(3)
+
+# Can comment this line out if your account does not have the suspicious login attempt screen
+input("Press Enter to continue...")
 
 # click not now button with css selector / comment out the lines if there is no popup
 notnow = webdriver.find_element_by_css_selector('body > div.RnEpo.Yx5HN > div > div > div.mt3GC > button.aOOlW.HoLwm')
 notnow.click() 
 
 # replace hashtags with the ones you want to follow
-hashtag_list = ['f4f', 'followforfollow', 'like4like', 'recent4recent', 'followback'] # change to hashtags you want to follow
+hashtag_list = ['follow4follow']
 
-# WIP
+# Open & read list of previously followed users, and add them to prev_user_list
 prev_user_list = []
-#prev_user_list = pd.read_csv('20181203-224633_users_followed_list.csv', delimiter=',').iloc[:,1:2] # useful to build a user log
-#prev_user_list = list(prev_user_list['0'])
+
+with open('followedlist.txt', 'r') as f:
+    x = f.readlines()
+    print(x)
+    if ',' in x[0]:
+        split_list = (x[0]).split(',')
+        for i in split_list:
+            prev_user_list.append(i)
+    print(prev_user_list)
 
 new_followed = []
 tag = -1
@@ -45,21 +55,27 @@ for hashtag in hashtag_list:
     first_thumbnail = webdriver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[1]/div/div/div[1]/div[1]/a/div')
 
     first_thumbnail.click()
-    sleep(randint(1,2))
+    sleep(randint(1, 2))
     try:
-        for x in range(1,200):
-            username = webdriver.find_element_by_xpath('/html/body/div[2]/div[2]/div/article/header/div[2]/div[1]/div[1]/h2/a').text
+        for x in range(1, 200):
+            username = webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/header/div[2]/div[1]/div[1]/h2/a').text
 
+            # Checking to see if username is correct
+            print(username)
+
+            # Check to see if we had previous interaction with a specific user
             if username not in prev_user_list:
-                if webdriver.find_element_by_xpath('/html/body/div[2]/div[2]/div/article/header/div[2]/div[1]/div[2]/button').text == 'Follow':
+                if webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/header/div[2]/div[1]/div[2]/button').text == 'Follow':
 
-                    webdriver.find_element_by_xpath('/html/body/div[2]/div[2]/div/article/header/div[2]/div[1]/div[2]/button').click()
+                    # Following users
+                    button_follow = webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/header/div[2]/div[1]/div[2]/button')
+                    button_follow.click()
 
                     new_followed.append(username)
                     followed += 1
 
-                    # Liking the picture
-                    button_like = webdriver.find_element_by_xpath('/html/body/div[2]/div[2]/div/article/div[2]/section[1]/span[1]/button/span')
+                    # Liking posts
+                    button_like = webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/div[2]/section[1]/span[1]/button/span')
 
                     button_like.click()
                     likes += 1
@@ -70,22 +86,22 @@ for hashtag in hashtag_list:
                     print('{}_{}: {}'.format(hashtag, x, comm_prob))
                     if comm_prob > 7:
                         comments += 1
-                        webdriver.find_element_by_xpath('//html/body/div[2]/div[2]/div/article/div[2]/section[1]/span[2]/button/span').click()
-                        comment_box = webdriver.find_element_by_xpath('/html/body/div[2]/div[2]/div/article/div[2]/section[3]/div/form/textarea')
+                        webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/div[2]/section[1]/span[2]/button/span').click()
+                        comment_box = webdriver.find_element_by_xpath('/html/body/div[3]/div[2]/div/article/div[2]/section[3]/div/form/textarea')
 
                         if (comm_prob < 7):
-                            comment_box.send_keys('That\'s totally rad! OwO') # replace with your own comment
+                            comment_box.send_keys('That\'s totally rad! Love it!') # replace with your own comment
                             sleep(1)
                         elif (comm_prob > 6) and (comm_prob < 9): # replace with your own comment
                             comment_box.send_keys('Love your profile. Let\'s follow each other!')
                             sleep(1)
                         elif comm_prob == 9:
-                            comment_box.send_keys('That\'s wild dude!') # replace with your own comment
+                            comment_box.send_keys('That\'s aMaZiNg!') # replace with your own comment
                             sleep(1)
                         elif comm_prob == 10:
                             comment_box.send_keys('UwU means unhappy without you. Please follow me!') # replace with your own comment
                             sleep(1)
-                        # Enter to post comment
+                        # Using python to press enter for us to post comments
                         comment_box.send_keys(Keys.ENTER)
                         sleep(randint(16, 23))
 
@@ -95,16 +111,16 @@ for hashtag in hashtag_list:
             else:
                 webdriver.find_element_by_link_text('Next').click()
                 sleep(randint(1, 5))
-    # some hashtag stops refreshing photos (it may happen sometimes), it continues to the next
+
+    # If the browser stops refreshing photos, it will move onto the next item in hashtag_list
     except:
         continue
 
-for n in range(0, len(new_followed)):
-    prev_user_list.append(new_followed[n])
+# Append the list of users followed to the existing .txt file
+with open('followedlist.txt', 'a+') as followedlist:
+    for username in new_followed:
+        followedlist.write(username + ',')
 
-updated_user_df = pd.DataFrame(prev_user_list)
-updated_user_df.to_csv('{}_users_followed_list.csv'.format(strftime("%Y%m%d-%H%M%S")))
 print('Liked {} photos.'.format(likes))
 print('Commented {} photos.'.format(comments))
 print('Followed {} new people.'.format(followed))
-
