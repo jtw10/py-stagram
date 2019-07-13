@@ -4,7 +4,8 @@ from time import sleep
 from random import randint
 
 
-chromedriver_path = r'C:\Users\Me\Downloads\chromedriver.exe' # replace path with your chromedriver path
+# replace path with your chromedriver path
+chromedriver_path = r'C:\Users\Me\Downloads\chromedriver.exe'
 webdriver = webdriver.Chrome(executable_path=chromedriver_path)
 sleep(2)
 webdriver.get('http://www.instagram.com/accounts/login/?source=auth_switcher')
@@ -20,7 +21,7 @@ button_login = webdriver.find_element_by_css_selector('#react-root > section > m
 button_login.click()
 sleep(3)
 
-# Can comment this line out if your account does not have the suspicious login attempt screen
+# comment this line out if your account does not have the suspicious login attempt screen
 input("Press Enter to continue...")
 
 # click not now button with css selector / comment out the lines if there is no popup
