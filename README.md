@@ -1,5 +1,5 @@
 ![Animated Instagram Likes](readme-img/gif.gif)
-# ig-bot: Find New Followers on Instagram!
+# py-stagram: Find New Followers on Instagram!
 This program will automate the process of liking posts, posting comments, and following Instagram accounts who have created posts with user-specified hashtags. Through "interacting" with other Instagram accounts, users will see a gradual increase in likes and followers. 
 
 It is important to note that if you care about your followers to following ratio, you should probably avoid using this program with your personal Instagram account. I created a seperate account to test the program out and the ratio was not the best. However, if you just want to grow your list of followers, you could run this in the background while you work on other tasks for a few hours everyday and you will grow your followers gradually over time.
